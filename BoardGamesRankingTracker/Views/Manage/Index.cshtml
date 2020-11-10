@@ -36,7 +36,7 @@
              
              Usuń komentarz z następującego bloku po skonfigurowaniu uwierzytelniania dwuskładnikowego
         *@
-        @*  
+        
             <dt>Numer telefonu:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
@@ -52,10 +52,10 @@
                 }
                 else
                 {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")&nbsp;&nbsp;]</text>
                 }
             </dd>
-        *@
+        
         <dt>Uwierzytelnianie dwuetapowe:</dt>
         <dd>
             <p>
