@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardGamesRankingTracker", "BoardGamesRankingTracker\BoardGamesRankingTracker.csproj", "{96F2EBC8-2894-489A-9E51-46F8851DFF01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardGamesRankingTracker.Tests", "BoardGamesRankingTracker.Tests\BoardGamesRankingTracker.Tests.csproj", "{4444D51F-040E-4F22-8D5C-5C41B333250B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96F2EBC8-2894-489A-9E51-46F8851DFF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96F2EBC8-2894-489A-9E51-46F8851DFF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96F2EBC8-2894-489A-9E51-46F8851DFF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96F2EBC8-2894-489A-9E51-46F8851DFF01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4444D51F-040E-4F22-8D5C-5C41B333250B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4444D51F-040E-4F22-8D5C-5C41B333250B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4444D51F-040E-4F22-8D5C-5C41B333250B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4444D51F-040E-4F22-8D5C-5C41B333250B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {197CB1E4-5170-4140-B0C3-00991E23E907}
+	EndGlobalSection
+EndGlobal
