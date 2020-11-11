@@ -64,6 +64,13 @@ namespace BoardGamesRankingTracker.Models
 
     public class RegisterViewModel
     {
+
+        [Required]
+        [Display(Name = "Nickname")]
+        [StringLength(30,ErrorMessage ="{0} musi zawierać co najmniej następującą liczbę znaków: {2}.", MinimumLength = 3)]
+        public string Nickname { get; set; }
+
+
         [Required]
         [EmailAddress]
         [Display(Name = "Adres e-mail")]

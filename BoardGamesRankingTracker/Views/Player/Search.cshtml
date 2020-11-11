@@ -1,0 +1,77 @@
+﻿
+
+<h2>Search Players.</h2>
+
+
+<div class="container form">
+
+
+    <form>
+        <div class="form-group">
+            <label for="playerName">Player Nickname</label>
+            <input type="search" class="form-control" id="playerName" aria-describedby="nameHelp" placeholder="Enter Player Nickname" />
+        </div>
+        <div class="form-group">
+            <label for="gameType">Gametype</label>
+            <select class="form-control" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
+                <option>Chess</option>
+                <option>Man, Don't Get Angry</option>
+                <option>Thousand Schnapsen</option>
+            </select>
+        </div>
+    </form>
+
+</div>
+
+<div class="container players-table">
+    <h3>
+        Found Players
+    </h3>
+    <table class="table table-hover table-dark">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nickname</th>
+                <th scope="col">Rating</th>
+                <th scope="col">W/L/T</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (int i = 1; i < 6; i++)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>shakkozu</td>
+                    <td>1578</td>
+                    <td>23/3/0</td>
+                </tr>
+            }
+            @for (int i = 6; i <= 10; i++)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>drow</td>
+                    <td>972</td>
+                    <td>0/1/0</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+

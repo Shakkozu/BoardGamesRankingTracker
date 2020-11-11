@@ -6,11 +6,10 @@ namespace RankingTrackerLibrary.Models
     {
         public int Id { get; set; }
 
-        public int TournamentId { get; set; }
-
         public List<Player> Competitors { get; set; }
 
-        public int WinnerId { get; set; }
+        public Player Winner { get; set; }
+
 
     }
 }

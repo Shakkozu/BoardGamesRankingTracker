@@ -20,10 +20,10 @@ namespace BoardGamesRankingTracker
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/lib/bootstrap-v4-rtl/js/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/lib/bootstrap-v4-rtl/css/bootstrap.css",
                       "~/Content/site.css"));
         }
     }

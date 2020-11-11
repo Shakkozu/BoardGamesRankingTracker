@@ -170,9 +170,19 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011101835016_InitialCreate.cs" />
+    <Compile Include="Migrations\202011101835016_InitialCreate.Designer.cs">
+      <DependentUpon>202011101835016_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011111727422_Player.cs" />
+    <Compile Include="Migrations\202011111727422_Player.Designer.cs">
+      <DependentUpon>202011111727422_Player.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -180,17 +190,128 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="libman.json" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-grid.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-grid.min.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-reboot.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-reboot.min.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-rtl.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-rtl.min.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap.min.css.map" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.bundle.js.map" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.bundle.min.js.map" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.js.map" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.min.js.map" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_alert.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_badge.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_breadcrumb.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_button-group.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_buttons.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_card.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_carousel.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_close.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_code.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_custom-forms.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_dropdown.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_forms.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_functions.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_grid.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_images.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_input-group.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_jumbotron.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_list-group.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_media.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_mixins.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_modal.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_nav.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_navbar.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_pagination.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_popover.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_print.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_progress.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_reboot.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_root.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_rtl.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_spinners.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_tables.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_toasts.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_tooltip.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_transitions.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_type.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\bootstrap-grid.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\bootstrap-reboot.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\bootstrap-rtl.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\bootstrap.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_alert.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_background-variant.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_badge.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_border-radius.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_utilities.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\_variables.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_box-shadow.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_breakpoints.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_buttons.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_caret.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_clearfix.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_deprecate.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_float.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_forms.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_gradients.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_grid-framework.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_grid.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_hover.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_image.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_list-group.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_lists.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_nav-divider.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_pagination.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_reset-text.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_resize.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_screen-reader.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_size.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_table-row.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_text-emphasis.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_text-hide.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_text-truncate.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_transition.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\mixins\_visibility.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_align.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_background.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_borders.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_clearfix.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_display.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_embed.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_flex.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_float.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_interactions.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_overflow.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_position.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_screenreaders.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_shadows.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_sizing.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_spacing.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_stretched-link.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_text.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\utilities\_visibility.scss" />
+    <Content Include="lib\bootstrap-v4-rtl\scss\vendor\_rfs.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-grid.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-grid.min.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-reboot.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-reboot.min.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-rtl.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap-rtl.min.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap.css" />
+    <Content Include="lib\bootstrap-v4-rtl\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.bundle.js" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.bundle.min.js" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.js" />
+    <Content Include="lib\bootstrap-v4-rtl\js\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -235,6 +356,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Player\Search.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -244,13 +367,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary\RankingTrackerLibrary.csproj">
+      <Project>{ce4b570e-7d9f-4127-9501-e7bc259ba698}</Project>
+      <Name>RankingTrackerLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011101835016_InitialCreate.resx">
+      <DependentUpon>202011101835016_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011111727422_Player.resx">
+      <DependentUpon>202011111727422_Player.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
