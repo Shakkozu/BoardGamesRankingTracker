@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace RankingTrackerLibrary.Data
 {
-    public class GlobalConfig
+    public static class GlobalConfig
     {
+        public static DataConnection Connection { get; set; } = new DataConnection();
+
         public static string CnnString(string name = "DefaultConnection")
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;

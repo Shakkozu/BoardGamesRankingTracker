@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BoardGamesRankingTracker.Models;
+using RankingTrackerLibrary.Data;
+using RankingTrackerLibrary.Models;
 
 namespace BoardGamesRankingTracker.Controllers
 {
@@ -139,6 +141,7 @@ namespace BoardGamesRankingTracker.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            string val = GlobalConfig.Connection.Test();
             return View();
         }
 
@@ -155,6 +158,8 @@ namespace BoardGamesRankingTracker.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    Player player = new Player { OwnerId = user.Id, Joined = DateTime.Today, EmailAddress = user.Email, Nickname = user.UserName };
+                    GlobalConfig.Connection.CreatePlayer(player);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Aby uzyskać więcej informacji o sposobie włączania potwierdzania konta i resetowaniu hasła, odwiedź stronę https://go.microsoft.com/fwlink/?LinkID=320771
