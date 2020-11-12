@@ -50,6 +50,7 @@ namespace BoardGamesRankingTracker
                 RequireUniqueEmail = true
             };
 
+
             // Konfiguruj logikę weryfikacji haseł
             manager.PasswordValidator = new PasswordValidator
             {

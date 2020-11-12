@@ -1,7 +1,8 @@
-﻿
+﻿@model BoardGamesRankingTracker.Models.PlayerViewModel
 @{
     ViewBag.Title = "Profile";
 }
+
 
 <h2>@ViewBag.Title</h2>
 
@@ -12,7 +13,7 @@
             <img src=""/>
         </div>
         <div class="col-8">
-            <h4>Nickname</h4>
+            <h4>@Html.ValueFor(m => m.Nickname)</h4>
         </div>
     </div>
 </div>
