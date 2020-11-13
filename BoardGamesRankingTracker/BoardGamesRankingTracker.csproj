@@ -224,6 +224,10 @@
     <Compile Include="Migrations\202011131637325_database_creation1.designer.cs">
       <DependentUpon>202011131637325_database_creation1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011131928469_db.cs" />
+    <Compile Include="Migrations\202011131928469_db.designer.cs">
+      <DependentUpon>202011131928469_db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -442,6 +446,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011131637325_database_creation1.resx">
       <DependentUpon>202011131637325_database_creation1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011131928469_db.resx">
+      <DependentUpon>202011131928469_db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
