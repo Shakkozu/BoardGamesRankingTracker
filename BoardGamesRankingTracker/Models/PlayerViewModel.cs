@@ -10,11 +10,16 @@ namespace BoardGamesRankingTracker.Models
 {
     public class PlayerViewModel
     {
+        public int Id { get; set; }
+
         public string Nickname { get; set; }
 
         public string EmailAddress { get; set; }
 
         public Dictionary<GameType, int> RankingPoints { get; set; }
+
+        public DateTime JoinedOn { get; set; }
+
 
         public int GamesPlayed { get; set; }
 

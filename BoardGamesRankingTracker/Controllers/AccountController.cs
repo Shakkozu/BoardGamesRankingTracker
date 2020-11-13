@@ -141,7 +141,6 @@ namespace BoardGamesRankingTracker.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            string val = GlobalConfig.Connection.Test();
             return View();
         }
 
@@ -158,7 +157,7 @@ namespace BoardGamesRankingTracker.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    Player player = new Player { OwnerId = user.Id, Joined = DateTime.Today, EmailAddress = user.Email, Nickname = user.UserName };
+                    Player player = new Player { OwnerId = user.Id, EmailAddress = user.Email, Nickname = user.UserName };
                     GlobalConfig.Connection.CreatePlayer(player);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

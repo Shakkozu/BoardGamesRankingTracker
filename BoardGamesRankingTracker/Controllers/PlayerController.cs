@@ -1,5 +1,6 @@
 ﻿using BoardGamesRankingTracker.Models;
 using Dapper;
+using Microsoft.AspNet.Identity;
 using RankingTrackerLibrary.Data;
 using RankingTrackerLibrary.Models;
 using System;
@@ -15,21 +16,36 @@ namespace BoardGamesRankingTracker.Controllers
     public class PlayerController : Controller
     {
         // GET: Player
-        public ActionResult Index(int id)
+        public ActionResult Index(int? id)
         {
-            Player player = new Player();
-            using(IDbConnection cnn = new SqlConnection(GlobalConfig.CnnString()))
+            if (id != null)
             {
-                var result = cnn.Query<Player>($"select * From Players Where Id={id}").First();
-                PlayerViewModel viewModel = new PlayerViewModel { EmailAddress = result.EmailAddress, Nickname = result.Nickname };
-                if(result != null)
-                    return View(viewModel);
+                Player player = new Player();
+                using (IDbConnection cnn = new SqlConnection(GlobalConfig.CnnString()))
+                {
+                    Player result = cnn.Query<Player>($"select * From Players Where Id={id}").First();
+                    PlayerViewModel viewModel = new PlayerViewModel { EmailAddress = result.EmailAddress, Nickname = result.Nickname };
+                    if (result != null)
+                        return View(viewModel);
+                }
+                return RedirectToAction("Search");
             }
-            return RedirectToAction("Search"); 
-            //return View(viewModel);
-
+            else
+            {
+                var userId = User.Identity.GetUserId();
+                if(userId != null)
+                {
+                Player result =  GlobalConfig.Connection.GetPlayer_ByOwnerId(userId);
+                PlayerViewModel viewModel = new PlayerViewModel { EmailAddress = result.EmailAddress, Nickname = result.Nickname, JoinedOn = result.Joined };
+                    if (result != null)
+                        return View(viewModel);
+                }
             
+
+            }
+            return RedirectToAction("Index", "Home");
         }
+
 
         //GET : Search
         public ActionResult Search()

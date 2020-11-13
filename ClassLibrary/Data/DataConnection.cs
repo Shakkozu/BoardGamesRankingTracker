@@ -20,7 +20,6 @@ namespace RankingTrackerLibrary.Data
                 p.Add("@Nickname", player.Nickname);
                 p.Add("@EmailAddress", player.EmailAddress);
                 p.Add("@OwnerId", player.OwnerId);
-                p.Add("@JoinedOn", player.Joined);
                 p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spPlayers_Insert", p, commandType: CommandType.StoredProcedure);
@@ -28,16 +27,33 @@ namespace RankingTrackerLibrary.Data
 
             }
         }
-        public string Test()
-        {
-            return "Hej, działam!";
-        }
 
         public List<Player> GetPlayers_All()
         {
             List<Player> result = new List<Player>();
 
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+               
 
+                result = connection.Query<Player>("dbo.spPlayers_GetAll", p, commandType: CommandType.StoredProcedure).ToList();
+
+                
+            }
+            return result;
+        }
+
+        public Player GetPlayer_ByOwnerId(string ownerId)
+        {
+            Player result;
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+                p.Add("@OwnerId", ownerId);
+
+                result = connection.Query<Player>("dbo.spPlayers_GetByOwnerId", p, commandType: CommandType.StoredProcedure).First();
+            }
             return result;
         }
 

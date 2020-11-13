@@ -9,6 +9,7 @@ namespace RankingTrackerLibrary
     public enum GameType
     {
         Chess,
+        Blackjack
     }
 
    
