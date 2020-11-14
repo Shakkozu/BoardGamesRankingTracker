@@ -16,7 +16,7 @@ namespace BoardGamesRankingTracker.Models
 
         public string EmailAddress { get; set; }
 
-        public Dictionary<GameType, int> RankingPoints { get; set; }
+        public Dictionary<string, int> RankingPoints { get; set; }
 
         public DateTime JoinedOn { get; set; }
 
@@ -30,5 +30,8 @@ namespace BoardGamesRankingTracker.Models
         public int GamesTied { get; set; }
 
         public float WinRatio { get; set; }
+
+        public string SelectedGame { get; set; }
     }
+
 }

@@ -1,77 +1,92 @@
-﻿
-
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<BoardGamesRankingTracker.Models.PlayerViewModel>
+@{
+    ViewBag.Title = "Szukaj";
+}
 <h2>Search Players.</h2>
 
-
+<p class="text-success">@ViewBag.StatusMessage</p>
+@Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
 <div class="container form">
+    @Html.TextBox("SearchString", "", new { @class = "form-control", @placeholder = "Enter Player Nickname" })
+    <div class="form-group">
+        <label for="gameType">Gametype</label>
+        <select class="form-control" name="currentFilter" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
+            @foreach (var type in Model.First().RankingPoints)
+            {
+                if (Model.First().SelectedGame == type.Key.ToString())
+                {
+                    <option selected>@type.Key.ToString()</option>
+                }
+                else
+                {
+                    <option>@type.Key.ToString()</option>
+                }
 
-
-    <form>
-        <div class="form-group">
-            <label for="playerName">Player Nickname</label>
-            <input type="search" class="form-control" id="playerName" aria-describedby="nameHelp" placeholder="Enter Player Nickname" />
-        </div>
-        <div class="form-group">
-            <label for="gameType">Gametype</label>
-            <select class="form-control" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
-                <option>Chess</option>
-                <option>Man, Don't Get Angry</option>
-                <option>Thousand Schnapsen</option>
-            </select>
-        </div>
-    </form>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" />
+    </div>
 
 </div>
-
-<div class="container players-table">
-    <h3>
-        Found Players
-    </h3>
-    <table class="table table-hover table-dark">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nickname</th>
-                <th scope="col">Rating</th>
-                <th scope="col">W/L/T</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @for (int i = 1; i < 6; i++)
-            {
+}
+    <div class="container players-table">
+        <h3>
+            Found Players
+        </h3>
+        <table class="table table-hover table-dark">
+            <thead class="thead-light">
                 <tr>
-                    <th scope="row">@i</th>
-                    <td>shakkozu</td>
-                    <td>1578</td>
-                    <td>23/3/0</td>
+                    <th scope="col">#</th>
+                    <th scope="col">Nickname</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">W/L/T</th>
                 </tr>
-            }
-            @for (int i = 6; i <= 10; i++)
-            {
-                <tr>
-                    <th scope="row">@i</th>
-                    <td>drow</td>
-                    <td>972</td>
-                    <td>0/1/0</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+            </thead>
 
-</div>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+
+
+
+                    <tr>
+                        @**To display id of found players correctly *@
+                        @if (@Model.PageNumber > 1)
+                        {
+                            <th scope="row">@(i + 1 + ((Model.PageNumber - 1) * 10))</th>
+                        }
+                        else
+                        {
+                            <th scope="row">@(i + 1)</th>
+                        }
+
+
+                        <td>
+                            <a href="@Url.Action("Details","Player",new {id=Model[i].Id})">
+                                @Html.DisplayFor(x => Model[i].Nickname)
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(x => Model[i].RankingPoints[Model[i].SelectedGame]) </td>
+                        <td> </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Search",
+        new { page, currentFilter = ViewBag.CurrentFilter }))
+        @*TODO - Rework Pagination to bootstrap type*@
+
+
+    </div>
 
 

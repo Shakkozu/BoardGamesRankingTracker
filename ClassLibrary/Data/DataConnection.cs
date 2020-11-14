@@ -28,6 +28,41 @@ namespace RankingTrackerLibrary.Data
             }
         }
 
+        public Player GetPlayer_ById(int id)
+        {
+            Player result;
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                //Get Player Info
+                var p = new DynamicParameters();
+                p.Add("@Id", id);
+                result = connection.Query<Player>("dbo.spPlayers_GetById", p, commandType: CommandType.StoredProcedure).First();
+
+
+                //Populate JoinedOn
+                var c = new DynamicParameters();
+                c.Add("@Id", result.Id);
+                DateTime value = connection.Query<DateTime>("dbo.spPlayers_GetJoinedById", c, commandType: CommandType.StoredProcedure).First();
+                result.Joined = value;
+
+                //Populate Ranking
+                List<Game> games = connection.Query<Game>("dbo.spGames_GetAll").ToList();
+                List<Ranking> rankings = connection.Query<Ranking>("dbo.spRankings_GetAll").ToList();
+                Dictionary<string, int> playerRanking = new Dictionary<string, int>();
+                foreach (Game game in games)
+                {
+                    IEnumerable<int> point = from ranking in rankings
+                                             where
+                    ranking.PlayerId == result.Id &&
+                    game.Id == ranking.GameId
+                                             select ranking.Points;
+                    playerRanking.Add(game.GameName, point.First());
+                }
+                result.RankingPoints = playerRanking;
+            }
+            return result;
+        }
+
         public List<Player> GetPlayers_All()
         {
             List<Player> result = new List<Player>();
@@ -38,7 +73,23 @@ namespace RankingTrackerLibrary.Data
                
 
                 result = connection.Query<Player>("dbo.spPlayers_GetAll", p, commandType: CommandType.StoredProcedure).ToList();
-
+                //TODO Update Player Ranking Dicitonary
+                List<Game> games = connection.Query<Game>("dbo.spGames_GetAll", p, commandType: CommandType.StoredProcedure).ToList();
+                List<Ranking> rankings = connection.Query<Ranking>("dbo.spRankings_GetAll").ToList();
+                foreach (Player player in result)
+                {
+                    //Populate Rankings
+                    Dictionary<string, int> playerRanking = new Dictionary<string, int>();
+                    foreach (Game game in games)
+                    {
+                        IEnumerable<int> point = from ranking in rankings where 
+                                                 ranking.PlayerId == player.Id &&
+                                                 game.Id == ranking.GameId
+                                                 select ranking.Points;
+                        playerRanking.Add(game.GameName, point.First());
+                    }
+                    player.RankingPoints = playerRanking;
+                }
                 
             }
             return result;
@@ -51,8 +102,29 @@ namespace RankingTrackerLibrary.Data
             {
                 var p = new DynamicParameters();
                 p.Add("@OwnerId", ownerId);
-
                 result = connection.Query<Player>("dbo.spPlayers_GetByOwnerId", p, commandType: CommandType.StoredProcedure).First();
+                
+                //Populate JoinedOn
+                var c = new DynamicParameters();
+                c.Add("@Id", result.Id);
+                DateTime value = connection.Query<DateTime>("dbo.spPlayers_GetJoinedById", c, commandType: CommandType.StoredProcedure).First();
+                result.Joined = value;
+
+                //Populate Ranking
+                List<Game> games = connection.Query<Game>("dbo.spGames_GetAll", p, commandType: CommandType.StoredProcedure).ToList();
+                List<Ranking> rankings = connection.Query<Ranking>("dbo.spRankings_GetAll").ToList();
+                Dictionary<string, int> playerRanking = new Dictionary<string, int>();
+                foreach (Game game in games)
+                {
+                    IEnumerable<int> point = from ranking in rankings
+                                             where
+                    ranking.PlayerId == result.Id &&
+                    game.Id == ranking.GameId
+                                             select ranking.Points;
+                    playerRanking.Add(game.GameName, point.First());
+                }
+                result.RankingPoints = playerRanking;
+
             }
             return result;
         }

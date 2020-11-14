@@ -18,7 +18,7 @@ namespace RankingTrackerLibrary.Models
 
         public int AvailableBoards { get; set; }
 
-        public GameType GameType { get; set; }
+        public string GameType { get; set; }
 
         public Player Winner { get; set; }
 

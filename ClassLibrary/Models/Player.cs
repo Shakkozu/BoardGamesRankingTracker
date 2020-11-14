@@ -20,7 +20,7 @@ namespace RankingTrackerLibrary.Models
 
         public string EmailAddress { get; set; }
 
-        public Dictionary<GameType,int> RankingPoints { get; set; }
+        public Dictionary<string,int> RankingPoints { get; set; }
 
         public int GamesPlayed { get; set; }
 

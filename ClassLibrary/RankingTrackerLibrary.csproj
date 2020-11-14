@@ -48,9 +48,11 @@
     <Compile Include="Data\GlobalConfig.cs" />
     <Compile Include="Data\DataConnection.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Lobby.cs" />
     <Compile Include="Models\Matchup.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Ranking.cs" />
     <Compile Include="Models\Tournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

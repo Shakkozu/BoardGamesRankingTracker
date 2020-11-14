@@ -45,9 +45,9 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Html.ValueFor(m => m.JoinedOn) </td>
+                <td>@Model.JoinedOn.ToShortDateString() </td>
                 <td>13</td>
-                <td>1328</td>
+                <td>@Html.ValueFor(x => x.RankingPoints) </td>
                 <td>12/1/0</td>
             </tr>
         </tbody>

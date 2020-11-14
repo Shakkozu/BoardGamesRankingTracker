@@ -10,47 +10,90 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace BoardGamesRankingTracker.Controllers
 {
     public class PlayerController : Controller
     {
         // GET: Player
-        public ActionResult Index(int? id)
+        public ActionResult Details(int? id)
         {
+            Player result = new Player();
             if (id != null)
             {
-                Player player = new Player();
-                using (IDbConnection cnn = new SqlConnection(GlobalConfig.CnnString()))
+                try
                 {
-                    Player result = cnn.Query<Player>($"select * From Players Where Id={id}").First();
-                    PlayerViewModel viewModel = new PlayerViewModel { EmailAddress = result.EmailAddress, Nickname = result.Nickname };
-                    if (result != null)
-                        return View(viewModel);
+                    result = GlobalConfig.Connection.GetPlayer_ById((int)id);
                 }
-                return RedirectToAction("Search");
+                catch (Exception e)
+                {
+                    string msg = e.Message;
+
+                    return RedirectToAction("Search", new { Message = PlayerMessages.InvalidId });
+                }
+                
             }
             else
             {
                 var userId = User.Identity.GetUserId();
-                if(userId != null)
+                if (userId != null)
                 {
-                Player result =  GlobalConfig.Connection.GetPlayer_ByOwnerId(userId);
-                PlayerViewModel viewModel = new PlayerViewModel { EmailAddress = result.EmailAddress, Nickname = result.Nickname, JoinedOn = result.Joined };
-                    if (result != null)
-                        return View(viewModel);
+                    result = GlobalConfig.Connection.GetPlayer_ByOwnerId(userId);
                 }
-            
-
             }
-            return RedirectToAction("Index", "Home");
+            if (result.EmailAddress != null)
+            {
+                PlayerViewModel viewModel = new PlayerViewModel
+                { EmailAddress = result.EmailAddress,
+                    Nickname = result.Nickname,
+                    JoinedOn = result.Joined,
+                    RankingPoints = result.RankingPoints
+                
+                };
+
+                return View(viewModel);
+            }
+            return RedirectToAction("Search",PlayerMessages.InvalidId);
         }
 
 
         //GET : Search
-        public ActionResult Search()
+        public ViewResult Search(string searchString, int? page, string currentFilter, PlayerMessages? Message)
         {
-            return View();
+            if (String.IsNullOrEmpty(currentFilter))
+            {
+                currentFilter = "Chess";
+            }
+            //TODO Fix showing viewbag status
+            List<Player> players = GlobalConfig.Connection.GetPlayers_All();
+            List<PlayerViewModel> viewModels = new List<PlayerViewModel>();
+            players.ForEach(x => viewModels.Add(new PlayerViewModel
+            {
+                Id = x.Id,
+                Nickname = x.Nickname,
+                RankingPoints = x.RankingPoints,
+                SelectedGame = currentFilter
+            }));
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                page = 1;
+                viewModels = viewModels.Where(s => s.Nickname.Contains(searchString)).ToList();
+            }
+           
+            ViewBag.CurrentFilter = currentFilter;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+           ViewBag.Status = Message == PlayerMessages.InvalidId ? "Nieprawidłowe Id Gracza." : "";
+            return View(viewModels.ToPagedList(pageNumber,pageSize));
+        }
+
+        public enum PlayerMessages
+        {
+            InvalidId,
         }
     }
+    
 }
