@@ -72,7 +72,11 @@
                             </a>
                         </td>
                         <td>@Html.DisplayFor(x => Model[i].RankingPoints[Model[i].SelectedGame]) </td>
-                        <td> </td>
+                        <td>
+                            @Html.DisplayFor(x=>Model[i].GamesWon)/
+                            @Html.DisplayFor(x=>Model[i].GamesLost)/
+                            @Html.DisplayFor(x=>Model[i].GamesTied)
+                       </td>
 
                     </tr>
 

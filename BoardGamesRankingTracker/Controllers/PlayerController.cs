@@ -66,14 +66,21 @@ namespace BoardGamesRankingTracker.Controllers
                 currentFilter = "Chess";
             }
             //TODO Fix showing viewbag status
+            
+            
             List<Player> players = GlobalConfig.Connection.GetPlayers_All();
             List<PlayerViewModel> viewModels = new List<PlayerViewModel>();
+            //TODO Update PlayerViewModel Creation (GamesLost,Won, etc. needs to be derived from source)
             players.ForEach(x => viewModels.Add(new PlayerViewModel
             {
                 Id = x.Id,
                 Nickname = x.Nickname,
                 RankingPoints = x.RankingPoints,
-                SelectedGame = currentFilter
+                SelectedGame = currentFilter,
+                GamesLost = 0,
+                GamesPlayed = 1,
+                GamesWon=1,
+                GamesTied=0
             }));
 
             if(!String.IsNullOrEmpty(searchString))

@@ -60,6 +60,7 @@ namespace RankingTrackerLibrary.Data
                 }
                 result.RankingPoints = playerRanking;
             }
+            //TODO POPULATE GAMES PLAYED,WON,LOST,ETC
             return result;
         }
 
@@ -73,7 +74,7 @@ namespace RankingTrackerLibrary.Data
                
 
                 result = connection.Query<Player>("dbo.spPlayers_GetAll", p, commandType: CommandType.StoredProcedure).ToList();
-                //TODO Update Player Ranking Dicitonary
+
                 List<Game> games = connection.Query<Game>("dbo.spGames_GetAll", p, commandType: CommandType.StoredProcedure).ToList();
                 List<Ranking> rankings = connection.Query<Ranking>("dbo.spRankings_GetAll").ToList();
                 foreach (Player player in result)
@@ -90,6 +91,7 @@ namespace RankingTrackerLibrary.Data
                     }
                     player.RankingPoints = playerRanking;
                 }
+                //TODO POPULATE GAMES PLAYED,WON,LOST,ETC
                 
             }
             return result;
@@ -124,8 +126,10 @@ namespace RankingTrackerLibrary.Data
                     playerRanking.Add(game.GameName, point.First());
                 }
                 result.RankingPoints = playerRanking;
-
             }
+            
+            //TODO POPULATE GAMES PLAYED,WON,LOST,ETC
+        
             return result;
         }
 
