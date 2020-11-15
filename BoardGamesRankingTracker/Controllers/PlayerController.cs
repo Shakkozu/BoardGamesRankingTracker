@@ -17,7 +17,7 @@ namespace BoardGamesRankingTracker.Controllers
     public class PlayerController : Controller
     {
         // GET: Player
-        public ActionResult Details(int? id, string currentFilter)
+        public ActionResult Details(int? id, string currentFilter, int? page)
         {
             if (String.IsNullOrEmpty(currentFilter))
             {
@@ -47,6 +47,23 @@ namespace BoardGamesRankingTracker.Controllers
             }
             if (result.EmailAddress != null)
             {
+
+                Dictionary<string, List<Matchup>> matchups = GlobalConfig.Connection.GetMatchups_ByPlayerId(result.Id);
+
+
+                Dictionary<string, PagedList.IPagedList<MatchupViewModel>> matchupViewModels = new Dictionary<string, IPagedList<MatchupViewModel>>();
+                //TODO Convert Matchup model to matchup model
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                //convert list of matchup model to list of matchupviewmodel
+                foreach (string key in matchups.Keys)
+                {
+                    matchupViewModels.Add(key, ConvertMatchupListToMatchupViewModelsList(matchups[key], pageNumber, pageSize));
+                }
+
+
+
                 PlayerViewModel viewModel = new PlayerViewModel
                 {
                     Id = result.Id,
@@ -57,13 +74,26 @@ namespace BoardGamesRankingTracker.Controllers
                     GamesLost = result.GamesLost,
                     GamesPlayed = result.GamesPlayed,
                     GamesWon = result.GamesWon,
-                    GamesTied = result.GamesTied
+                    GamesTied = result.GamesTied,
+                    PlayerMatchups = matchupViewModels
+                    //TODO ADD MATCHUP INFO
+                    //PlayerMatchups = matchups
 
                 };
 
                 return View(viewModel);
             }
             return RedirectToAction("Search",PlayerMessages.InvalidId);
+        }
+
+        private static PagedList.IPagedList<MatchupViewModel> ConvertMatchupListToMatchupViewModelsList(List<Matchup> matchups, int pageNumber, int pageSize)
+        { 
+            List<MatchupViewModel> vm = new List<MatchupViewModel>();
+            foreach (var item in matchups)
+            {
+                vm.Add(new MatchupViewModel { PlayedOn = item.PlayedOn, Players = item.Players, Winner = item.WinnerId });
+            }
+            return vm.ToPagedList(pageNumber,pageSize);
         }
 
 

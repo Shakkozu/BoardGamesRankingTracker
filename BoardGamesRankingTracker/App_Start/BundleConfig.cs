@@ -25,6 +25,9 @@ namespace BoardGamesRankingTracker
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/lib/bootstrap-v4-rtl/css/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+          "~/lib/bootstrap-v4-rtl/css/bootstrap.css",
+          "~/Content/Site.css"));
         }
     }
 }

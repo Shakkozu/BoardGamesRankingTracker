@@ -12,6 +12,7 @@ namespace RankingTrackerLibrary.Data
 {
     public class DataConnection
     {
+        //TODO REFACTOR GetPlayer_ Methods (in the name of DRY methodology)
         public void CreatePlayer(Player player)
         {
             using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
@@ -90,7 +91,48 @@ namespace RankingTrackerLibrary.Data
                 result.GamesPlayed= gamesPlayed;
 
             }
-            //TODO POPULATE GAMES PLAYED,WON,LOST,ETC
+            return result;
+        }
+
+        public Dictionary<string, List<Matchup>> GetMatchups_ByPlayerId(int playerId)
+        {
+            Dictionary<string, List<Matchup>> result = new Dictionary<string, List<Matchup>>();
+            using (SqlConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                
+                List<Game> games = connection.Query<Game>("dbo.spGames_GetAll").ToList();
+                List<Player> players = connection.Query<Player>("dbo.spPlayers_GetAll").ToList();
+                    foreach (Game game in games)
+                {
+                    //Get Matchups
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@PlayerId", playerId);
+                    parameters.Add("@GameName", game.GameName);
+                    //TODO REWORK THIS METHOD SO MATCHUPS GET INFO ABOUT PLAYERS PARTICIPATING
+                    List<Matchup> matchups = connection.Query<Matchup>("dbo.spMatchups_GetByPlayerId", parameters, commandType: CommandType.StoredProcedure).ToList();
+                    foreach (Matchup matchup in matchups)
+                    {
+                        //create players list for matchup
+                        List<Player> matchupPlayers = new List<Player>();
+
+                        var p = new DynamicParameters();
+                        //Get MatchupEntries for this certain matchup
+                        p.Add("@MatchupId", matchup.Id);
+                        List<MatchupEntry> matchupEntries =
+                            connection.Query<MatchupEntry>("dbo.spMatchupEntries_GetByMatchupId", p, commandType: CommandType.StoredProcedure).ToList();
+                        //Get players info from matchup Entries
+                        foreach (MatchupEntry matchupEntry in matchupEntries)
+                        {
+                            matchupPlayers.Add(players.Where(x => x.Id == matchupEntry.PlayerCompetingId).FirstOrDefault());
+                        }
+                        //Add information about participants to matchup
+                        matchup.Players = matchupPlayers;
+                    }
+                    
+
+                    result.Add(game.GameName, matchups);
+                }
+            }
             return result;
         }
 
@@ -147,7 +189,7 @@ namespace RankingTrackerLibrary.Data
                         gamesTied.Add(game.GameName,matchups.Where(x => x.WinnerId == null).Count());
 
                         //games Lost
-                        gamesLost.Add(game.GameName, (matchups.Count - (gamesWon[game.GameName] - gamesTied[game.GameName])));
+                        gamesLost.Add(game.GameName, (matchups.Count - (gamesWon[game.GameName] + gamesTied[game.GameName])));
 
                     }
                     player.GamesPlayed = gamesPlayed;
@@ -221,7 +263,7 @@ namespace RankingTrackerLibrary.Data
                 result.GamesPlayed = gamesPlayed;
 
             }
-            //TODO POPULATE GAMES PLAYED,WON,LOST,ETC
+
             return result;
         }
 

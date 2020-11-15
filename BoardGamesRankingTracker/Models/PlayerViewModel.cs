@@ -1,4 +1,5 @@
-﻿using RankingTrackerLibrary;
+﻿using PagedList;
+using RankingTrackerLibrary;
 using RankingTrackerLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,10 @@ namespace BoardGamesRankingTracker.Models
         public float WinRatio { get; set; }
 
         public string SelectedGame { get; set; }
+
+        public Dictionary<string,PagedList.IPagedList<MatchupViewModel>> PlayerMatchups{ get; set; }
+
+
     }
 
 }

@@ -67,7 +67,7 @@
 
 
                         <td>
-                            <a href="@Url.Action("Details","Player",new {id=Model[i].Id})">
+                            <a href="@Url.Action("Details", "Player", new { id = Model[i].Id, currentFilter = Model[i].SelectedGame})">
                                 @Html.DisplayFor(x => Model[i].Nickname)
                             </a>
                         </td>

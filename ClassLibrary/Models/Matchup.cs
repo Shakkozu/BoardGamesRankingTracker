@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RankingTrackerLibrary.Models
 {
@@ -22,6 +23,9 @@ namespace RankingTrackerLibrary.Models
         /// </summary>
         public bool Finished { get; set; }
 
+        public DateTime PlayedOn { get; set; }
+
+        public List<Player> Players { get; set; }
 
     }
 }
