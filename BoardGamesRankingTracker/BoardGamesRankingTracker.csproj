@@ -259,6 +259,14 @@
     <Compile Include="Migrations\202011131928469_db.designer.cs">
       <DependentUpon>202011131928469_db.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011151255382_search.cs" />
+    <Compile Include="Migrations\202011151255382_search.designer.cs">
+      <DependentUpon>202011151255382_search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011151302111_search2.cs" />
+    <Compile Include="Migrations\202011151302111_search2.designer.cs">
+      <DependentUpon>202011151302111_search2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -481,6 +489,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011131928469_db.resx">
       <DependentUpon>202011131928469_db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011151255382_search.resx">
+      <DependentUpon>202011151255382_search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011151302111_search2.resx">
+      <DependentUpon>202011151302111_search2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

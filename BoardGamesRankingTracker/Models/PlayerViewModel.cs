@@ -21,13 +21,13 @@ namespace BoardGamesRankingTracker.Models
         public DateTime JoinedOn { get; set; }
 
 
-        public int GamesPlayed { get; set; }
+        public Dictionary<string, int> GamesPlayed { get; set; }
 
-        public int GamesWon { get; set; }
+        public Dictionary<string, int> GamesWon { get; set; }
 
-        public int GamesLost { get; set; }
+        public Dictionary<string, int> GamesLost { get; set; }
 
-        public int GamesTied { get; set; }
+        public Dictionary<string, int> GamesTied { get; set; }
 
         public float WinRatio { get; set; }
 

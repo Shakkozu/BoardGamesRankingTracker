@@ -6,11 +6,11 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div class="container player-frame text-center text-center" >
+<div class="container player-frame text-center text-center">
     <div class="row border justify-content-center">
         <div class="col-4">
             <h4>img</h4>
-            <img src=""/>
+            <img src="" />
         </div>
         <div class="col-8">
             <h4>@Html.ValueFor(m => m.Nickname)</h4>
@@ -18,20 +18,34 @@
     </div>
 </div>
 
-<div class="container">
 
-    <form>
+@Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    <div class="container form">
         <div class="form-group">
             <label for="gameType">Gametype</label>
-            <select class="form-control" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
-                <option>Chess</option>
-                <option>Man, Don't Get Angry</option>
-                <option>Thousand Schnapsen</option>
+            <select class="form-control" name="currentFilter" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
+                @foreach (var type in Model.RankingPoints)
+                {
+                    if (Model.SelectedGame == type.Key.ToString())
+                    {
+                        <option selected>@type.Key.ToString()</option>
+                    }
+                    else
+                    {
+                        <option>@type.Key.ToString()</option>
+                    }
+
+                }
             </select>
         </div>
-    </form>
-</div>
+        <div class="form-group">
+            <input type="submit" value="Search" />
+        </div>
 
+    </div>
+}
 
 <div class="playerstat-table">
     <table class="table table-light">
@@ -40,18 +54,22 @@
                 <td>Joined</td>
                 <td>Games Played</td>
                 <td>Rating</td>
-                <td>W/L/T</td>
+                <td>W / L / T</td>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>@Model.JoinedOn.ToShortDateString() </td>
-                <td>13</td>
-                <td>@Html.ValueFor(x => x.RankingPoints) </td>
-                <td>12/1/0</td>
+                <td>@Model.GamesPlayed[Model.SelectedGame]</td>
+                <td>@Model.RankingPoints[Model.SelectedGame] </td>
+                <td>
+                    @Model.GamesWon[Model.SelectedGame] /
+                    @Model.GamesLost[Model.SelectedGame] /
+                    @Model.GamesTied[Model.SelectedGame]
+                </td>
             </tr>
         </tbody>
-    </table>  
+    </table>
 </div>
 
 <div class="container playermatches-table">

@@ -17,8 +17,12 @@ namespace BoardGamesRankingTracker.Controllers
     public class PlayerController : Controller
     {
         // GET: Player
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string currentFilter)
         {
+            if (String.IsNullOrEmpty(currentFilter))
+            {
+                currentFilter = "Chess";
+            }
             Player result = new Player();
             if (id != null)
             {
@@ -32,7 +36,6 @@ namespace BoardGamesRankingTracker.Controllers
 
                     return RedirectToAction("Search", new { Message = PlayerMessages.InvalidId });
                 }
-                
             }
             else
             {
@@ -45,11 +48,17 @@ namespace BoardGamesRankingTracker.Controllers
             if (result.EmailAddress != null)
             {
                 PlayerViewModel viewModel = new PlayerViewModel
-                { EmailAddress = result.EmailAddress,
-                    Nickname = result.Nickname,
+                {
+                    Id = result.Id,
                     JoinedOn = result.Joined,
-                    RankingPoints = result.RankingPoints
-                
+                    Nickname = result.Nickname,
+                    RankingPoints = result.RankingPoints,
+                    SelectedGame = currentFilter,
+                    GamesLost = result.GamesLost,
+                    GamesPlayed = result.GamesPlayed,
+                    GamesWon = result.GamesWon,
+                    GamesTied = result.GamesTied
+
                 };
 
                 return View(viewModel);
@@ -77,10 +86,10 @@ namespace BoardGamesRankingTracker.Controllers
                 Nickname = x.Nickname,
                 RankingPoints = x.RankingPoints,
                 SelectedGame = currentFilter,
-                GamesLost = 0,
-                GamesPlayed = 1,
-                GamesWon=1,
-                GamesTied=0
+                GamesLost = x.GamesLost,
+                GamesPlayed = x.GamesPlayed,
+                GamesWon=x.GamesWon,
+                GamesTied=x.GamesTied
             }));
 
             if(!String.IsNullOrEmpty(searchString))

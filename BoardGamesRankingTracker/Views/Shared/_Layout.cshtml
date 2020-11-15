@@ -28,7 +28,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            @Html.ActionLink("Statystyki", "Index", "Player", routeValues: 1, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+                            @Html.ActionLink("Statystyki", "Details", "Player", routeValues: 1, htmlAttributes: new { title = "Manage", @class = "nav-link" })
                         </li>
                     }
                     <div class="d-lg-none">

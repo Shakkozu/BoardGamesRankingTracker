@@ -30,6 +30,5 @@ namespace BoardGamesRankingTracker.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<RankingTrackerLibrary.Models.Player> Players { get; set; }
     }
 }

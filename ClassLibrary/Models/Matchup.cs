@@ -9,18 +9,18 @@ namespace RankingTrackerLibrary.Models
         /// </summary>
         public int Id { get; set; }
 
-        public List<Player> Competitors { get; set; }
+        public int TournamentId { get; set; }
 
         /// <summary>
         /// Property used to find winners by database ID
         /// This property is a list, because in case of tie, both players will be marked as winners
         /// </summary>
-        public List<int> WinnerId { get; set; }
+        public int? WinnerId { get; set; }
 
         /// <summary>
         /// Property is a list, because in case of tie, both players will be makred as winners.
         /// </summary>
-        public List<Player> Winner { get; set; }
+        public bool Finished { get; set; }
 
 
     }

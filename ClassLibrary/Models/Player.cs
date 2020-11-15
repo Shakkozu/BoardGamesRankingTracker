@@ -22,13 +22,15 @@ namespace RankingTrackerLibrary.Models
 
         public Dictionary<string,int> RankingPoints { get; set; }
 
-        public int GamesPlayed { get; set; }
+        public Dictionary<string,int> GamesPlayed { get; set; }
 
-        public int GamesWon { get; set; }
+        public Dictionary<string, int> GamesWon { get; set; }
 
-        public int GamesTied { get; set; }
+        public Dictionary<string, int> GamesTied { get; set; }
 
-        public float WinPercentage { get; set; }
+        public Dictionary<string, int> GamesLost { get; set; }
+
+        public Dictionary<string, float> WinPercentage { get; set; }
 
         public DateTime Joined { get; set; }
 
