@@ -53,7 +53,7 @@ namespace BoardGamesRankingTracker.Controllers
 
                 Dictionary<string, PagedList.IPagedList<MatchupViewModel>> matchupViewModels = new Dictionary<string, IPagedList<MatchupViewModel>>();
                 //TODO Convert Matchup model to matchup model
-                int pageSize = 10;
+                int pageSize = 3;
                 int pageNumber = (page ?? 1);
 
                 //convert list of matchup model to list of matchupviewmodel

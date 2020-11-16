@@ -1,0 +1,96 @@
+﻿@model BoardGamesRankingTracker.Models.TournamentCreateViewModel
+
+
+@{
+    ViewBag.Title = "Create Tournament";
+}
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("Create", "Tournament", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+<div class="container form">
+    <div class="form-group">
+        @Html.LabelFor(x => x.MaxPlayers)
+        @Html.EditorFor(x => x.MaxPlayers)
+    </div>
+    <div class="form-group">
+        <label for="gameType">Gametype</label>
+        <select class="form-control" name="SelectedGame" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
+            @foreach (string type in Model.GameTypes)
+            {
+                <option>@type</option>
+            }
+        </select>
+    </div>    
+    <div class="form-group">
+        <input type="submit" value="Create!" />
+    </div>
+
+</div>
+} 
+   <h2>
+    Join Tournament
+</h2>
+@using (Html.BeginForm("Join", "Tournament", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container form">
+        <div class="form-group">
+            @Html.Label("privateKey","Private Key")
+            @Html.Editor("privateKey","Private Key")
+        </div>
+            <input type="submit" value="Join!" />
+        </div>
+
+
+}
+
+@*<section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Zaloguj się za pomocą konta lokalnego.</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zaloguj" class="btn btn-secondary" />
+                </div>
+            </div>
+            <p>
+                @Html.ActionLink("Zarejestruj się jako nowy użytkownik", "Register")
+            </p>
+            @* Włącz ten element po włączeniu potwierdzenia konta dla funkcji resetowania hasła
+                <p>
+                    @Html.ActionLink("Nie pamiętasz hasła?", "ForgotPassword")
+                </p>
+        }
+    </section>
+*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

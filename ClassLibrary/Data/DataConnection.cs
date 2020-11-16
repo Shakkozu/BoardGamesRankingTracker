@@ -29,6 +29,16 @@ namespace RankingTrackerLibrary.Data
             }
         }
 
+        public List<string> GetGameNames()
+        {
+            List<string> result = new List<string>();
+            using(SqlConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                result = connection.Query<string>("dbo.spGames_GetAllNames").ToList();
+            }
+            return result;
+        }
+
         public Player GetPlayer_ById(int id)
         {
             Player result;
