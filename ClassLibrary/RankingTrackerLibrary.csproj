@@ -50,6 +50,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Lobby.cs" />
+    <Compile Include="Models\LobbyEntry.cs" />
     <Compile Include="Models\Matchup.cs" />
     <Compile Include="Models\MatchupEntry.cs" />
     <Compile Include="Models\Player.cs" />

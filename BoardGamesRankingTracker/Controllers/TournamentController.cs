@@ -69,9 +69,10 @@ namespace BoardGamesRankingTracker.Controllers
         }
         
         [Authorize]
-        public ActionResult Lobby(int lobbyId)
+        public ActionResult Lobby(int? lobbyId)
         {
-            Lobby lobby = GlobalConfig.Connection.GetLobby_ById(lobbyId);
+            Lobby lobby = GlobalConfig.Connection.GetLobby_ById(lobbyId.GetValueOrDefault());
+           
             TournamentLobbyViewModel mdl = new TournamentLobbyViewModel(lobby);
             return View();
         }

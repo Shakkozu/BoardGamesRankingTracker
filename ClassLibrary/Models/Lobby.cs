@@ -8,6 +8,10 @@ namespace RankingTrackerLibrary.Models
 {
     public class Lobby
     {
+        public Lobby()
+        {
+        }
+
         public Lobby(Player lobbyCreator, string gameType)
         {
             Players.Add(lobbyCreator);
@@ -23,7 +27,10 @@ namespace RankingTrackerLibrary.Models
 
         public List<Player> Players { get; set; } = new List<Player>();
 
-        public string GameType { get; }
+        public string GameType { get; set; }
+
+        public int GameId { get; set; }
+
 
 
     }

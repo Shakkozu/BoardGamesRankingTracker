@@ -76,12 +76,44 @@ namespace RankingTrackerLibrary.Data
 
         public Lobby GetLobby_ById(int id)
         {
-            Lobby result;
+            Lobby result = new Lobby();
             using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
             {
                 var p = new DynamicParameters();
-                p.Add("@Id", id);
-                result = connection.Query<Lobby>("dbo.spLobbies_GetById", p).FirstOrDefault();
+                p.Add("@LobbyId", id);
+                result = connection.Query<Lobby>("dbo.spLobbies_GetById", p,commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                //Wire up Lobby GameType
+                Game game = GetGameByGameId(result.GameId);
+                result.GameType = game.GameName;
+
+                // Wire Up Lobby Players
+                var c = new DynamicParameters();
+                c.Add("@Lobby", id);
+                List<Player> players = new List<Player>();
+                List<LobbyEntry> lobbyEntries = connection.Query<LobbyEntry>("dbo.spLobbyEntries_GetByLobbyId",c,commandType: CommandType.StoredProcedure).ToList();
+
+                foreach (var lobbyEntry in lobbyEntries)
+                {
+                    int playerId = lobbyEntry.PlayerId;
+                    players.Add(GetPlayer_ById(playerId));
+                }
+                result.Players = players;
+
+                
+            }
+            return result;
+        }
+
+        private Game GetGameByGameId(int gameId)
+        {
+            Game result;
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+                p.Add("@GameId", gameId);
+
+                result = connection.Query<Game>("dbo.spGames_GetByGameId", p, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
             return result;
         }
