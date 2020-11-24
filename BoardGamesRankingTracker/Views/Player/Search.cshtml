@@ -14,17 +14,20 @@
     <div class="form-group">
         <label for="gameType">Gametype</label>
         <select class="form-control" name="currentFilter" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
-            @foreach (var type in Model.First().RankingPoints)
+            @if (Model.FirstOrDefault() != null)
             {
-                if (Model.First().SelectedGame == type.Key.ToString())
+                foreach (var type in Model.First().RankingPoints)
                 {
-                    <option selected>@type.Key.ToString()</option>
-                }
-                else
-                {
-                    <option>@type.Key.ToString()</option>
-                }
+                    if (Model.First().SelectedGame == type.Key.ToString())
+                    {
+                        <option selected>@type.Key.ToString()</option>
+                    }
+                    else
+                    {
+                        <option>@type.Key.ToString()</option>
+                    }
 
+                }
             }
         </select>
     </div>

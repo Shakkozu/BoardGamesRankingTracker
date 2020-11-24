@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "Create Tournament";
+    ViewBag.Title = "Create Lobby";
 }
 <h2>@ViewBag.Title</h2>
 
@@ -31,7 +31,7 @@
 </div>
 } 
    <h2>
-    Join Tournament
+    Join Lobby
 </h2>
 @using (Html.BeginForm("Join", "Tournament", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {

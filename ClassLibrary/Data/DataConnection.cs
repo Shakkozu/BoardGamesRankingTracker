@@ -39,6 +39,72 @@ namespace RankingTrackerLibrary.Data
             return result;
         }
 
+        /// <summary>
+        /// Creates new lobby in database
+        /// </summary>
+        /// <param name="lobby">Lobby model containing Creator and GameName</param>
+        /// <returns>Created Lobby ID or -1 if failed</returns>
+        public int CreateLobby(Lobby lobby)
+        {
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                //get game id
+                var p = new DynamicParameters();
+                Game game = GetGameByGameName(lobby.GameType);
+                if (game == null)
+                    return -1;
+                p.Add("@GameId", game.Id);
+                p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                //get private key
+                Random random = new Random();
+                string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                string privateKey = new string(Enumerable.Repeat(chars, 9).Select(s => s[random.Next(s.Length)]).ToArray());
+                p.Add("@PrivateKey", privateKey);
+
+                //create lobby
+                connection.Execute("dbo.spLobbies_Insert", p, commandType: CommandType.StoredProcedure);
+                lobby.Id = p.Get<int>("Id");
+
+                //create lobby Entry for creator
+                var c = new DynamicParameters();
+                c.Add("@PlayerId", lobby.Players.First().Id);
+                c.Add("@LobbyId", lobby.Id);
+                connection.Execute("dbo.spLobbyEntries_Insert", c, commandType: CommandType.StoredProcedure);
+            }
+            return lobby.Id;
+        }
+
+        public Lobby GetLobby_ById(int id)
+        {
+            Lobby result;
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", id);
+                result = connection.Query<Lobby>("dbo.spLobbies_GetById", p).FirstOrDefault();
+            }
+            return result;
+        }
+
+        public void CreateGame(string gameName)
+        {
+            //TODO Remove any spaces from gameName, it's mandatory due to other Game Related Methods/Procedures!
+            gameName = gameName.Replace(" ", "");
+            throw new NotImplementedException();
+        }
+
+        public Game GetGameByGameName(string gameName)
+        {
+            Game result;
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+                p.Add("@GameName", gameName);
+
+                result = connection.Query<Game>("dbo.spGames_GetByGameName", p, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+            return result;
+        }
         public Player GetPlayer_ById(int id)
         {
             Player result;
@@ -276,6 +342,8 @@ namespace RankingTrackerLibrary.Data
 
             return result;
         }
+
+        
 
     }
 

@@ -450,6 +450,7 @@
     <Content Include="Views\Player\Search.cshtml" />
     <Content Include="Views\Player\Details.cshtml" />
     <Content Include="Views\Tournament\Create.cshtml" />
+    <Content Include="Views\Tournament\Lobby.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

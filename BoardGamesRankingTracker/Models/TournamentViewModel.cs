@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RankingTrackerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,9 +25,22 @@ namespace BoardGamesRankingTracker.Models
 
         public int MaxPlayers { get; set; }
 
-        public string CreatorId { get; set; }
         public string SelectedGame { get; set; }
 
 
+    }
+    public class TournamentLobbyViewModel
+    {
+        public TournamentLobbyViewModel()
+        {
+            
+        }
+
+        public TournamentLobbyViewModel(Lobby lobby)
+        {
+            Lobby = lobby;
+        }
+
+        public Lobby Lobby { get; }
     }
 }
