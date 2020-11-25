@@ -19,17 +19,21 @@ namespace BoardGamesRankingTracker.Controllers
         // GET: Player
         public ActionResult Details(int? id, string currentFilter, int? page)
         {
+            //Set default filter is none is given
             if (String.IsNullOrEmpty(currentFilter))
             {
                 currentFilter = "Chess";
             }
+
             Player result = new Player();
+            //If player was selected from search list / id was given
             if (id != null)
             {
                 try
                 {
                     result = GlobalConfig.Connection.GetPlayer_ById((int)id);
                 }
+                //in case there's no player with given id redirect to search
                 catch (Exception e)
                 {
                     string msg = e.Message;
@@ -37,6 +41,7 @@ namespace BoardGamesRankingTracker.Controllers
                     return RedirectToAction("Search", new { Message = PlayerMessages.InvalidId });
                 }
             }
+            //if user is logged in, redirect to his account page
             else
             {
                 var userId = User.Identity.GetUserId();
@@ -45,6 +50,7 @@ namespace BoardGamesRankingTracker.Controllers
                     result = GlobalConfig.Connection.GetPlayer_ByOwnerId(userId);
                 }
             }
+            //if player has been found get information about him
             if (result.EmailAddress != null)
             {
 
@@ -76,9 +82,6 @@ namespace BoardGamesRankingTracker.Controllers
                     GamesWon = result.GamesWon,
                     GamesTied = result.GamesTied,
                     PlayerMatchups = matchupViewModels
-                    //TODO ADD MATCHUP INFO
-                    //PlayerMatchups = matchups
-
                 };
 
                 return View(viewModel);
