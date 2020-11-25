@@ -23,7 +23,6 @@ namespace BoardGamesRankingTracker.Models
         }
         public List<string> GameTypes { get;}
 
-        public int MaxPlayers { get; set; }
 
         public string SelectedGame { get; set; }
 

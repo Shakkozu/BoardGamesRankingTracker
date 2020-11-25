@@ -44,15 +44,17 @@ namespace RankingTrackerLibrary.Data
         /// </summary>
         /// <param name="lobby">Lobby model containing Creator and GameName</param>
         /// <returns>Created Lobby ID or -1 if failed</returns>
-        public int CreateLobby(Lobby lobby)
+        public int? CreateLobby(Player creator, string gameName)
         {
+            int? result = null;
             using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
             {
+                
                 //get game id
                 var p = new DynamicParameters();
-                Game game = GetGameByGameName(lobby.GameType);
+                Game game = GetGameByGameName(gameName);
                 if (game == null)
-                    return -1;
+                    return result;
                 p.Add("@GameId", game.Id);
                 p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 //get private key
@@ -63,15 +65,15 @@ namespace RankingTrackerLibrary.Data
 
                 //create lobby
                 connection.Execute("dbo.spLobbies_Insert", p, commandType: CommandType.StoredProcedure);
-                lobby.Id = p.Get<int>("Id");
+                result = p.Get<int>("Id");
 
                 //create lobby Entry for creator
                 var c = new DynamicParameters();
-                c.Add("@PlayerId", lobby.Players.First().Id);
-                c.Add("@LobbyId", lobby.Id);
+                c.Add("@PlayerId", creator.Id);
+                c.Add("@LobbyId", result.Value);
                 connection.Execute("dbo.spLobbyEntries_Insert", c, commandType: CommandType.StoredProcedure);
             }
-            return lobby.Id;
+            return result;
         }
 
         public Lobby GetLobby_ById(int id)
@@ -85,7 +87,7 @@ namespace RankingTrackerLibrary.Data
 
                 //Wire up Lobby GameType
                 Game game = GetGameByGameId(result.GameId);
-                result.GameType = game.GameName;
+                result.GameType = game;
 
                 // Wire Up Lobby Players
                 var c = new DynamicParameters();

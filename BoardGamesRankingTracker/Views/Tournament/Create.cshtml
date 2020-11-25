@@ -12,10 +12,6 @@
     @Html.AntiForgeryToken()
 <div class="container form">
     <div class="form-group">
-        @Html.LabelFor(x => x.MaxPlayers)
-        @Html.EditorFor(x => x.MaxPlayers)
-    </div>
-    <div class="form-group">
         <label for="gameType">Gametype</label>
         <select class="form-control" name="SelectedGame" id="gameType" aria-describedby="gameHelp" placeholder="Enter Player Nickname">
             @foreach (string type in Model.GameTypes)

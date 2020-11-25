@@ -12,24 +12,19 @@ namespace RankingTrackerLibrary.Models
         {
         }
 
-        public Lobby(Player lobbyCreator, string gameType)
-        {
-            Players.Add(lobbyCreator);
-            GameType = gameType;
-
-        }
-
         public int Id { get; set; }
 
         public string PrivateKey { get; set; }
 
-        public int MaxPlayers { get; set; }
-
         public List<Player> Players { get; set; } = new List<Player>();
 
-        public string GameType { get; set; }
+        //public string GameType { get; set; }
 
         public int GameId { get; set; }
+
+        public Game GameType { get; set; }
+
+
 
 
 

@@ -24,6 +24,7 @@ namespace BoardGamesRankingTracker.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            //TODO if player is already in active tournament, redirect to this tournamnet gameplay page
             TournamentCreateViewModel model = new TournamentCreateViewModel(GlobalConfig.Connection.GetGameNames());
             return View(model);
         }
@@ -40,12 +41,11 @@ namespace BoardGamesRankingTracker.Controllers
             Player lobbyCreator = GlobalConfig.Connection.GetPlayer_ByOwnerId(creatorId);
             //get gameType
             string gameType = model.SelectedGame;
-
-            //TOOD Create New Lobby
-            Lobby lobby = new Lobby(lobbyCreator, gameType);
+            //TOOD Create New Lobby;
+            int? lobbyId;
             try
             {
-                lobby.Id = GlobalConfig.Connection.CreateLobby(lobby);
+                lobbyId = GlobalConfig.Connection.CreateLobby(lobbyCreator,gameType);
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace BoardGamesRankingTracker.Controllers
                 return Redirect("Create");
             }
             //Redirect to this lobby if creation went succesfully
-            return RedirectToAction("Lobby",lobby.Id);//View();
+            return RedirectToAction("Lobby",new { lobbyId = lobbyId});//View();
         }
 
         [HttpPost]
@@ -68,9 +68,12 @@ namespace BoardGamesRankingTracker.Controllers
             return RedirectToAction("Create");
         }
         
+        [HttpGet]
         [Authorize]
         public ActionResult Lobby(int? lobbyId)
         {
+            if (lobbyId == null)
+                return RedirectToAction("Create");
             Lobby lobby = GlobalConfig.Connection.GetLobby_ById(lobbyId.GetValueOrDefault());
            
             TournamentLobbyViewModel mdl = new TournamentLobbyViewModel(lobby);
