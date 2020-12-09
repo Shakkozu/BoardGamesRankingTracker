@@ -1,9 +1,13 @@
-﻿
+﻿@model BoardGamesRankingTracker.Models.TournamentLobbyViewModel
 @{
     ViewBag.Title = "Lobby";
 }
 
 <h2>Lobby</h2>
 <h5>Players in lobby</h5>
+@foreach (var player in Model.Lobby.Players)
+{
+    <a>@player.Nickname</a>
+}
 
-
+<h6>Lobby Key:<a>@Model.Lobby.PrivateKey</a></h6>

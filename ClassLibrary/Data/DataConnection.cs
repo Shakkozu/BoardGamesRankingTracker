@@ -76,6 +76,51 @@ namespace RankingTrackerLibrary.Data
             return result;
         }
 
+        public void CreateLobbyEntry(int lobbyId, int playerId)
+        {
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+                p.Add("@PlayerId", playerId);
+                p.Add("@LobbyId", lobbyId);
+                connection.Execute("dbo.spLobbyEntries_Insert", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public Lobby GetLobbyByPrivateKey(string privateKey)
+        {
+            Lobby result = new Lobby();
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                var p = new DynamicParameters();
+                p.Add("@PrivateKey", privateKey);
+                result = connection.Query<Lobby>("dbo.spLobbies_GetByPrivateKey", p, commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                //If found lobby is invalid, return empty object
+                if (result == null)
+                    return result;
+
+                
+                //Wire up Lobby GameType
+                Game game = GetGameByGameId(result.GameId);
+                result.GameType = game;
+
+                // Wire Up Lobby Players
+                var c = new DynamicParameters();
+                c.Add("@Lobby", result.Id);
+                List<Player> players = new List<Player>();
+                List<LobbyEntry> lobbyEntries = connection.Query<LobbyEntry>("dbo.spLobbyEntries_GetByLobbyId", c, commandType: CommandType.StoredProcedure).ToList();
+
+                foreach (var lobbyEntry in lobbyEntries)
+                {
+                    int playerId = lobbyEntry.PlayerId;
+                    players.Add(GetPlayer_ById(playerId));
+                }
+                result.Players = players;
+            }
+            return result;
+        }
+
         public Lobby GetLobby_ById(int id)
         {
             Lobby result = new Lobby();

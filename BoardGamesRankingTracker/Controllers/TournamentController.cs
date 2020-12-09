@@ -61,11 +61,21 @@ namespace BoardGamesRankingTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Join(string privateKey)
         {
-            string userId = User.Identity.GetUserId();
+            string ownerId = User.Identity.GetUserId();
+            Player player = GlobalConfig.Connection.GetPlayer_ByOwnerId(ownerId);
 
             //TODO Join to lobby
+            Lobby lobby = GlobalConfig.Connection.GetLobbyByPrivateKey(privateKey);
+            if (lobby == null)
+            {
+                return RedirectToAction("Create");
+            }
+            else
+            {
+                GlobalConfig.Connection.CreateLobbyEntry(lobby.Id, player.Id);
+                return RedirectToAction("Lobby", new { lobbyId = lobby.Id });
+            }
 
-            return RedirectToAction("Create");
         }
         
         [HttpGet]
@@ -76,8 +86,11 @@ namespace BoardGamesRankingTracker.Controllers
                 return RedirectToAction("Create");
             Lobby lobby = GlobalConfig.Connection.GetLobby_ById(lobbyId.GetValueOrDefault());
            
+            if(lobby.Active == false)
+                return RedirectToAction("Create");
             TournamentLobbyViewModel mdl = new TournamentLobbyViewModel(lobby);
-            return View();
+
+            return View(mdl);
         }
     }
 }

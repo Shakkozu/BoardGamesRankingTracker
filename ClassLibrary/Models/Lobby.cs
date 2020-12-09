@@ -24,6 +24,8 @@ namespace RankingTrackerLibrary.Models
 
         public Game GameType { get; set; }
 
+        public bool Active { get; set; }
+
 
 
 
