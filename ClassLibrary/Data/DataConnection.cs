@@ -121,6 +121,17 @@ namespace RankingTrackerLibrary.Data
             return result;
         }
 
+        public void RemovePlayerFromLobby(int lobbyId, int playerId)
+        {
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString()))
+            {
+                DynamicParameters p = new DynamicParameters();
+                p.Add("@LobbyId", lobbyId);
+                p.Add("@PlayerId", playerId);
+                connection.Execute("dbo.spLobbyEntries_Delete",p,commandType:CommandType.StoredProcedure);
+            }
+        }
+
         public Lobby GetLobby_ById(int id)
         {
             Lobby result = new Lobby();

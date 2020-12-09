@@ -62,14 +62,19 @@ namespace BoardGamesRankingTracker.Controllers
         public ActionResult Join(string privateKey)
         {
             string ownerId = User.Identity.GetUserId();
+            
+            //Get Player 
             Player player = GlobalConfig.Connection.GetPlayer_ByOwnerId(ownerId);
-
-            //TODO Join to lobby
+                
+            //Get Lobby
             Lobby lobby = GlobalConfig.Connection.GetLobbyByPrivateKey(privateKey);
+            
+            //If lobby wasn't found, redirect to create view
             if (lobby == null)
             {
                 return RedirectToAction("Create");
             }
+            //If lobby was found, join it, and redirect to Lobby View
             else
             {
                 GlobalConfig.Connection.CreateLobbyEntry(lobby.Id, player.Id);
@@ -90,7 +95,38 @@ namespace BoardGamesRankingTracker.Controllers
                 return RedirectToAction("Create");
             TournamentLobbyViewModel mdl = new TournamentLobbyViewModel(lobby);
 
+            //Get Player
+            string ownerId = User.Identity.GetUserId();
+
+            Player player = GlobalConfig.Connection.GetPlayer_ByOwnerId(ownerId);
+            if(player == null)
+                return RedirectToAction("Create");
+
+            //If Player, who's trying to get to lobby is within this lobby, show it to him, otherwise redirect to 'Create' view
+            var res = lobby.Players.Where(x => x.Id == player.Id).FirstOrDefault();
+            if(res == null)
+                return RedirectToAction("Create");
+            
+
             return View(mdl);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Leave(string privateKey)
+        {
+            string ownerId = User.Identity.GetUserId();
+
+            //Get Player 
+            Player player = GlobalConfig.Connection.GetPlayer_ByOwnerId(ownerId);
+
+            Lobby lobby = GlobalConfig.Connection.GetLobbyByPrivateKey(privateKey);
+
+            
+            GlobalConfig.Connection.RemovePlayerFromLobby(lobby.Id, player.Id);
+            return RedirectToAction("Create");
+
+
         }
     }
 }
