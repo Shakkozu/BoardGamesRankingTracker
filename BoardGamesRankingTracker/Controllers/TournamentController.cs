@@ -120,9 +120,10 @@ namespace BoardGamesRankingTracker.Controllers
             //Get Player 
             Player player = GlobalConfig.Connection.GetPlayer_ByOwnerId(ownerId);
 
+            //Get Lobby
             Lobby lobby = GlobalConfig.Connection.GetLobbyByPrivateKey(privateKey);
 
-            
+            //Remove Player from Lobby
             GlobalConfig.Connection.RemovePlayerFromLobby(lobby.Id, player.Id);
             return RedirectToAction("Create");
 

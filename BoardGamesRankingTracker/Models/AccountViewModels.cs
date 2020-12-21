@@ -49,9 +49,8 @@ namespace BoardGamesRankingTracker.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Adres e-mail")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Nazwa Użytkownika")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

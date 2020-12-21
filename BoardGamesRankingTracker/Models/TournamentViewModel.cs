@@ -41,5 +41,6 @@ namespace BoardGamesRankingTracker.Models
         }
 
         public Lobby Lobby { get; }
+
     }
 }

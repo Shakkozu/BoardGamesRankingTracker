@@ -1,42 +1,13 @@
-﻿@model BoardGamesRankingTracker.Models.TournamentLobbyViewModel
-@{
-    ViewBag.Title = "Lobby";
+﻿@{
+    ViewBag.Title = "Chat";
 }
-
-<h2>Lobby</h2>
 <div class="container">
+    <input type="hidden" id="displayname" />
 
-    <h5>Players in lobby</h5>
-    <input type="hidden" id="displayname" value="@User.Identity.Name.Replace(" ","")" />
+    <h2>Players In Lobby:</h2>
     <ul id="players">
-        @foreach (var player in Model.Lobby.Players)
-        {
-            string id_string = player.Nickname.Replace(" ", "");
-            <li id="@id_string"><strong>@player.Nickname</strong></li>
-            @*
-
-                    var id = name.replace(/\s+/gm, '')
-
-                        $('#players').append('<li id=' + id + '><strong>' + htmlEncode(name)
-                + '</strong> ' + '</li>');
-            *@
-        }
     </ul>
-
-
 </div>
-
-
-<h6>Lobby Key:<a>@Model.Lobby.PrivateKey</a></h6>
-@using (Html.BeginForm("Leave", "Tournament", new { ReturnUrl = ViewBag.ReturnUrl, privateKey = Model.Lobby.PrivateKey }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id="leave-form"}))
-{
-    @Html.AntiForgeryToken()
-    <div class="container form">
-        <input type="submit" value="Leave Tournamnent!" />
-    </div>
-
-
-}
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
@@ -66,15 +37,12 @@
             };
 
             // Get the user name and store it to prepend to messages.
-            $('#displayname').val("");
+            $('#displayname').val(prompt('Enter your name:', ''));
             // Set initial focus to message input box.
             $('#message').focus();
             // Start the connection.
             $.connection.hub.start().done(function () {
-                $('#leave-form').submit(function () {
-                    // Call the Send method on the hub.
-                    lobby.server.goodbye($('#displayname').val());
-                });
+               
                 $(document).ready(function () {
 
                     lobby.server.hello($('#displayname').val());
