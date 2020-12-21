@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BoardGamesRankingTracker
+namespace BoardGamesRankingTracker.Hubs
 {
     public class LobbyHub : Hub
     {
         public void Hello(string name)
         {
-            Clients.All.hello(name);
+            Clients.Others.hello(name);
         }
 
         public void Goodbye(string name)

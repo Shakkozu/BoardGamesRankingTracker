@@ -280,7 +280,7 @@
     <Compile Include="Models\MatchupViewModel.cs" />
     <Compile Include="Models\PlayerViewModel.cs" />
     <Compile Include="Models\TournamentViewModel.cs" />
-    <Compile Include="LobbyHub.cs" />
+    <Compile Include="Hubs\LobbyHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

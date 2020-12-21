@@ -11,7 +11,7 @@ namespace BoardGamesRankingTracker
         {
             ConfigureAuth(app);
 
-           // app.MapSignalR();
+           app.MapSignalR();
         }
     }
 }
